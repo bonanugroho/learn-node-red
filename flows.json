@@ -1,1 +1,335 @@
-[]
+[
+    {
+        "id": "1d31b94f982e390f",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8498c513c7831aa1",
+        "type": "serial-port",
+        "name": "COM2",
+        "serialport": "COM2",
+        "serialbaud": "9600",
+        "databits": 8,
+        "parity": "none",
+        "stopbits": 1,
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "bin",
+        "out": "char",
+        "addchar": "\\r",
+        "responsetimeout": 10000
+    },
+    {
+        "id": "86a4a45ce507a9cb",
+        "type": "serial in",
+        "z": "1d31b94f982e390f",
+        "name": "Serial Received Message",
+        "serial": "8498c513c7831aa1",
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "0b2e126d75bf09df",
+                "3731c02e37576ed3"
+            ]
+        ]
+    },
+    {
+        "id": "0b2e126d75bf09df",
+        "type": "debug",
+        "z": "1d31b94f982e390f",
+        "name": "Received Mesg",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e2292001a230526c",
+        "type": "serial out",
+        "z": "1d31b94f982e390f",
+        "name": "Send Message",
+        "serial": "8498c513c7831aa1",
+        "x": 720,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3731c02e37576ed3",
+        "type": "function",
+        "z": "1d31b94f982e390f",
+        "name": "prep Resp Messg",
+        "func": "msg.payload = \"Received at \" + Date.now() + \" > Mesg: \" + msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 380,
+        "wires": [
+            [
+                "e2292001a230526c",
+                "cbcf8da1835dd8b6"
+            ]
+        ]
+    },
+    {
+        "id": "cbcf8da1835dd8b6",
+        "type": "debug",
+        "z": "1d31b94f982e390f",
+        "name": "Sent Message",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e21f7ee9cd9912a7",
+        "type": "inject",
+        "z": "1d31b94f982e390f",
+        "name": "SensorMessage",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "X=20.5#Y=50#Z=80#",
+        "payloadType": "str",
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "abb48cb989189d5d"
+            ]
+        ]
+    },
+    {
+        "id": "abb48cb989189d5d",
+        "type": "split",
+        "z": "1d31b94f982e390f",
+        "name": "Split By #",
+        "splt": "#",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "03a4d34f892332c9"
+            ]
+        ]
+    },
+    {
+        "id": "03a4d34f892332c9",
+        "type": "switch",
+        "z": "1d31b94f982e390f",
+        "name": "Context Sensor",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^X",
+                "vt": "str",
+                "case": false
+            },
+            {
+                "t": "regex",
+                "v": "^Y",
+                "vt": "str",
+                "case": false
+            },
+            {
+                "t": "regex",
+                "v": "^Z",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 600,
+        "y": 120,
+        "wires": [
+            [
+                "7e824e3e48ada9bf"
+            ],
+            [
+                "4af710177f733fb2"
+            ],
+            [
+                "ee4785a5d3daa6c6"
+            ]
+        ]
+    },
+    {
+        "id": "68a03af4b45a277b",
+        "type": "debug",
+        "z": "1d31b94f982e390f",
+        "name": "debug X",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "0694cf69b1d399de",
+        "type": "debug",
+        "z": "1d31b94f982e390f",
+        "name": "debug Y",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "99a74e45a7905338",
+        "type": "debug",
+        "z": "1d31b94f982e390f",
+        "name": "debug Z",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "7e824e3e48ada9bf",
+        "type": "function",
+        "z": "1d31b94f982e390f",
+        "name": "getValue",
+        "func": "const str = msg.payload;\n//str = str.substring(2,str.length);\nconst arr = str.split(\"=\");\nmsg.payload = arr[1];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 40,
+        "wires": [
+            [
+                "68a03af4b45a277b"
+            ]
+        ]
+    },
+    {
+        "id": "4af710177f733fb2",
+        "type": "function",
+        "z": "1d31b94f982e390f",
+        "name": "getValue",
+        "func": "let str = msg.payload;\nstr = str.substring(2,str.length);\nmsg.payload = str;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 120,
+        "wires": [
+            [
+                "0694cf69b1d399de"
+            ]
+        ]
+    },
+    {
+        "id": "ee4785a5d3daa6c6",
+        "type": "function",
+        "z": "1d31b94f982e390f",
+        "name": "getValue",
+        "func": "let str = msg.payload;\nstr = str.substring(2,str.length);\nmsg.payload = str;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 200,
+        "wires": [
+            [
+                "99a74e45a7905338"
+            ]
+        ]
+    },
+    {
+        "id": "c8204dc529d99392",
+        "type": "change",
+        "z": "1d31b94f982e390f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    }
+]
