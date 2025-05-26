@@ -28,13 +28,28 @@
         "responsetimeout": 10000
     },
     {
+        "id": "3f5bbd199bdd2150",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "influxdb-v2",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.100.190:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
         "id": "86a4a45ce507a9cb",
         "type": "serial in",
         "z": "1d31b94f982e390f",
         "name": "Serial Received Message",
         "serial": "8498c513c7831aa1",
         "x": 190,
-        "y": 280,
+        "y": 400,
         "wires": [
             [
                 "0b2e126d75bf09df",
@@ -56,7 +71,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 460,
-        "y": 280,
+        "y": 400,
         "wires": []
     },
     {
@@ -66,7 +81,7 @@
         "name": "Send Message",
         "serial": "8498c513c7831aa1",
         "x": 720,
-        "y": 380,
+        "y": 500,
         "wires": []
     },
     {
@@ -82,7 +97,7 @@
         "finalize": "",
         "libs": [],
         "x": 470,
-        "y": 380,
+        "y": 500,
         "wires": [
             [
                 "e2292001a230526c",
@@ -104,7 +119,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 720,
-        "y": 480,
+        "y": 600,
         "wires": []
     },
     {
@@ -125,7 +140,7 @@
         "payload": "X=20.5#Y=50#Z=80#",
         "payloadType": "str",
         "x": 180,
-        "y": 120,
+        "y": 240,
         "wires": [
             [
                 "abb48cb989189d5d"
@@ -145,7 +160,7 @@
         "addname": "",
         "property": "payload",
         "x": 400,
-        "y": 120,
+        "y": 240,
         "wires": [
             [
                 "03a4d34f892332c9"
@@ -183,7 +198,7 @@
         "repair": false,
         "outputs": 3,
         "x": 600,
-        "y": 120,
+        "y": 240,
         "wires": [
             [
                 "7e824e3e48ada9bf"
@@ -210,7 +225,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 980,
-        "y": 40,
+        "y": 120,
         "wires": []
     },
     {
@@ -227,7 +242,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 980,
-        "y": 120,
+        "y": 220,
         "wires": []
     },
     {
@@ -244,7 +259,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 980,
-        "y": 200,
+        "y": 300,
         "wires": []
     },
     {
@@ -252,7 +267,7 @@
         "type": "function",
         "z": "1d31b94f982e390f",
         "name": "getValue",
-        "func": "const str = msg.payload;\n//str = str.substring(2,str.length);\nconst arr = str.split(\"=\");\nmsg.payload = arr[1];\nreturn msg;",
+        "func": "const str = msg.payload;\n//str = str.substring(2,str.length);\nconst arr = str.split(\"=\");\nmsg.payload = parseFloat(arr[1]);\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -260,10 +275,11 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 40,
+        "y": 160,
         "wires": [
             [
-                "68a03af4b45a277b"
+                "68a03af4b45a277b",
+                "26436e4768ef9acc"
             ]
         ]
     },
@@ -272,7 +288,7 @@
         "type": "function",
         "z": "1d31b94f982e390f",
         "name": "getValue",
-        "func": "let str = msg.payload;\nstr = str.substring(2,str.length);\nmsg.payload = str;\nreturn msg;",
+        "func": "const str = msg.payload;\n//str = str.substring(2,str.length);\nconst arr = str.split(\"=\");\nmsg.payload = parseFloat(arr[1]);\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -280,10 +296,11 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 120,
+        "y": 240,
         "wires": [
             [
-                "0694cf69b1d399de"
+                "0694cf69b1d399de",
+                "7041211c74e7c78e"
             ]
         ]
     },
@@ -292,7 +309,7 @@
         "type": "function",
         "z": "1d31b94f982e390f",
         "name": "getValue",
-        "func": "let str = msg.payload;\nstr = str.substring(2,str.length);\nmsg.payload = str;\nreturn msg;",
+        "func": "const str = msg.payload;\n//str = str.substring(2,str.length);\nconst arr = str.split(\"=\");\nmsg.payload = parseFloat(arr[1]);\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -300,36 +317,66 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 200,
+        "y": 320,
         "wires": [
             [
-                "99a74e45a7905338"
+                "99a74e45a7905338",
+                "ef9db28d5f8523f1"
             ]
         ]
     },
     {
-        "id": "c8204dc529d99392",
-        "type": "change",
+        "id": "7041211c74e7c78e",
+        "type": "influxdb out",
         "z": "1d31b94f982e390f",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 320,
-        "y": 640,
-        "wires": [
-            []
-        ]
+        "influxdb": "3f5bbd199bdd2150",
+        "name": "Insert Presure",
+        "measurement": "presure",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "myorg",
+        "bucket": "sensor_data",
+        "x": 1000,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "26436e4768ef9acc",
+        "type": "influxdb out",
+        "z": "1d31b94f982e390f",
+        "influxdb": "3f5bbd199bdd2150",
+        "name": "Insert Temperature",
+        "measurement": "temperature",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "myorg",
+        "bucket": "sensor_data",
+        "x": 1010,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ef9db28d5f8523f1",
+        "type": "influxdb out",
+        "z": "1d31b94f982e390f",
+        "influxdb": "3f5bbd199bdd2150",
+        "name": "Insert Humidity",
+        "measurement": "humidity",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "myorg",
+        "bucket": "sensor_data",
+        "x": 1000,
+        "y": 360,
+        "wires": []
     }
 ]
