@@ -22,7 +22,7 @@
         "cts": "none",
         "dsr": "none",
         "newline": "\\n",
-        "bin": "bin",
+        "bin": "false",
         "out": "char",
         "addchar": "\\r",
         "responsetimeout": 10000
