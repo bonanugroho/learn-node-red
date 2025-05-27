@@ -22,7 +22,7 @@
         "cts": "none",
         "dsr": "none",
         "newline": "\\n",
-        "bin": "false",
+        "bin": "bin",
         "out": "char",
         "addchar": "\\r",
         "responsetimeout": 10000
@@ -49,30 +49,12 @@
         "name": "Serial Received Message",
         "serial": "8498c513c7831aa1",
         "x": 190,
-        "y": 440,
+        "y": 460,
         "wires": [
             [
-                "0b2e126d75bf09df",
                 "abb48cb989189d5d"
             ]
         ]
-    },
-    {
-        "id": "0b2e126d75bf09df",
-        "type": "debug",
-        "z": "1d31b94f982e390f",
-        "name": "Received Mesg",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 440,
-        "y": 380,
-        "wires": []
     },
     {
         "id": "e2292001a230526c",
